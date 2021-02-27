@@ -1,19 +1,16 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <HelloWorldBootstrap msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import HelloWorldBootstrap from "@/components/MainPage";
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {HelloWorldBootstrap},
+  beforeCreate() {
+    this.$store.dispatch('fetchRecipes');
   }
-}
+};
 </script>
 
 <style>
