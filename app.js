@@ -25,7 +25,7 @@ app.get('/api/range/:first/:limit',(req,res) => {
     });
 });
 
-app.listen(3001,() => console.log('Server started on port 3001'));
+app.listen(process.env.PORT,() => console.log('Server started on port 3001'));
 
 //Max number of available recipes 3538
 //const asyncBdLoader=setInterval(() =>getTotalNumberOfRecipes().then(count=>count>3500?clearInterval(asyncBdLoader):loadBulkRecipesIntoDb()),25000)
