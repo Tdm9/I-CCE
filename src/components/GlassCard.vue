@@ -23,18 +23,19 @@
 </template>
 
 <script>
-import iconlink from "@/components/sidebar/icon-link"
+import iconlink from "@/components/sidebar/icon-link";
+import {homePath,popularPath,favPath,searchPath} from '@/utils/links';
 export default {
   name: "GlassCard",
   components: {iconlink},
   data() {
     return {
       icons: [
-        { icon: 'house', link: "/" ,text:'Home'},
-        { icon: 'list-stars', link:"/popular", text:'Most Popular'},
-        { icon: 'star', link:"/favorites", text:'Favorites'},
-        { icon: 'binoculars', link:"/search", text:'Search'}
-      ]
+        { icon: 'house', link: homePath ,text:'Home'},
+        { icon: 'list-stars', link:popularPath, text:'Most Popular'},
+        { icon: 'star', link:favPath, text:'Favorites'},
+        { icon: 'binoculars', link:searchPath, text:'Search'},
+      ],
     }
   }
 }

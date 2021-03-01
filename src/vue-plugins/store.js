@@ -14,8 +14,7 @@ const store = new Vuex.Store({
             state.recipes=recipes;
         },
         orderAndSet(state,recipes){
-            state.recipesOrderedByType=groupBy(recipes,'type');
-            console.log(state.recipesOrderedByType)
+            state.recipesOrderedByType=recipes//groupBy(recipes,'type');
         },
     },
     actions: {
@@ -23,7 +22,10 @@ const store = new Vuex.Store({
             .then(response => response.json())
             .then(result => {
                 commit('set', chunk(result,500));
-                commit('orderAndSet', result);
+                return result
+            })
+            .then(result =>{
+                commit('orderAndSet', groupBy(result,'type'));
             })
             .catch(error => console.log('error', error)),
     }
