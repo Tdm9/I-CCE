@@ -22,7 +22,7 @@ npm run lint
 
 ### Deploys to githubPages
 ```
-npm run deploy
+npm run deploy automatically
 ```
 
 ### Customize configuration
