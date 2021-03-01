@@ -3,14 +3,13 @@
 </template>
 
 <script>
-import HelloWorldBootstrap from "@/components/MainPage";
+import HelloWorldBootstrap from '@/components/MainPage';
 export default {
   name: 'App',
   components: {HelloWorldBootstrap},
   beforeCreate() {
     this.$store.dispatch('fetchRecipes');
-  }
-};
+  }};
 </script>
 
 <style>
