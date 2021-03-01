@@ -22,7 +22,7 @@ export default {
   },
   beforeCreate() {
 
-    fetch(`http://localhost:3001/api/range/0/40`)
+    fetch(`https://icce-server.herokuapp.com/api/range/0/40`)
         .then(response => response.json())
         .then(result => {
           this.chunkedColumns=chunk(result//.slice(0,20)

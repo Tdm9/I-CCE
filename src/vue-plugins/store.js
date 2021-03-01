@@ -19,7 +19,7 @@ const store = new Vuex.Store({
         },
     },
     actions: {
-        fetchRecipes: ({ commit }) => fetch(`http://localhost:3001/api`)
+        fetchRecipes: ({ commit }) => fetch(`https://icce-server.herokuapp.com/api`)
             .then(response => response.json())
             .then(result => {
                 commit('set', chunk(result,500));
