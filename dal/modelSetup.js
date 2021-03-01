@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const connectionString = 'mongodb+srv://user:user@cluster0.lzlng.mongodb.net/companion?retryWrites=true&w=majority'
 const {Schema} = mongoose;
 const recipeSchema=new Schema({
     _id: {type: Number, required: true},
@@ -16,5 +15,4 @@ const recipeSchema=new Schema({
 })
 mongoose.connection.on('connected',()=> console.log('Mongoose is connected!'))
 
-//module.exports = ()=> mongoose.connect(connectionString).then(mongoose=>mongoose.model('Recipes', recipeSchema));
-module.exports = ()=> mongoose.connect(connectionString).then(mongoose=>mongoose.model('Iccebase', recipeSchema));
+module.exports = ()=> mongoose.connect(process.env.connectionString).then(mongoose=>mongoose.model('Iccebase', recipeSchema));

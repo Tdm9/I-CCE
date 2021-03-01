@@ -1,8 +1,17 @@
-const jsdom = require("jsdom");
-const imgFilter = ['https://receitas.moulinex.pt/companion/images/logo.png','https://receitas.moulinex.pt/companion/images/default-user-image.jpg','https://receitas.moulinex.pt/companion/uploads/images/2015/10/20/56264ff08de78_3.jpg']
+const jsdom = require('jsdom');
+const imgFilter = ['https://receitas.moulinex.pt/companion/images/logo.png','https://receitas.moulinex.pt/companion/images/default-user-image.jpg',
+    'https://receitas.moulinex.pt/companion/uploads/images/2015/10/20/56264ff08de78_3.jpg'];
 
+/**
+ * parses html into recipe objects
+ * @param html
+ * @param currentId
+ * @returns {{difficulty: string, dosage: string, recipeImage: string,
+ * comments: {commentator: string, comment: string}[], name: string, creatorName: string, cookTime: string, ingredients: string[], _id,
+ * type: string, cookingSteps: string[]}}
+ */
 const domParser= (html,currentId)=>{
-    const doc=new jsdom.JSDOM(html).window.document
+    const doc=new jsdom.JSDOM(html).window.document;
     const recipeDetails = Array.from(doc.querySelector('.recipeDetails.col-xs-12').querySelectorAll('li'), listItem => listItem.textContent);
     return {
         _id: currentId,
@@ -19,15 +28,4 @@ const domParser= (html,currentId)=>{
         comments: Array.from(doc.querySelector('.col-sm-12.shadow.comments-section').querySelectorAll('.comment.col-sm-12'),comment=>({commentator:comment.querySelector('h4').textContent,comment:comment.querySelector('div.comment-text').textContent}))
     }
 }
-
-
-/*
-* img-header-crop img-fix ---- imagem tumbnail
-* img-crop img-fix
-*
-*
-*
-*
-*
-* */
 module.exports= domParser
