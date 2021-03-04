@@ -2,53 +2,54 @@
   <div v-cloak>
     <b-spinner v-show="!loaded" class="m-5" label="Busy"></b-spinner>
     <b-card-group columns v-show="loaded">
-      <OverlayImageCard v-for="(item,idx) in $store.state.recipesOrderedByType[$route.params.type]" v-bind:key="item.recipeImage+idx" :recipe="item"/>
-
+      <OverlayImageCard v-for="(item,idx) in data[currentPage-1]" v-bind:key="item.recipeImage+idx" :recipe="item"/>
     </b-card-group>
-    </div>
+    <b-pagination v-model="currentPage" :total-rows="(data.length)*perPage" :per-page="perPage" first-text="⏮" prev-text="⏪" next-text="⏩" last-text="⏭" class="mt-4"/>
+  </div>
     <!--b-spinner :v-show="!loaded" class="m-5" label="Busy"></b-spinner-->
 </template>
 
 <script>
 import OverlayImageCard from "@/components/OverlayImageCard";
-
+import {chunk} from 'lodash'
 export default {
   name: "RecipeTypeViewer",
   data(){
     return{
+      data: [],
+      perPage: 50,
+      currentPage: 1,
       loaded:false,
     }
   },
+  methods: {
+    chunk,
+  },
   components: {OverlayImageCard},
   mounted() {
-    //500  -- 115/72 items - panela
-    //2000-- 195 -compota
-    //2000 -- 443 items - carne
-    //4000 -- 912 items - sobremesas
-    console.log('mounted initiated(',Date.now())
     const waitForStore =setInterval(()=>{
-      if (!this.$store.state.recipesOrderedByType[this.$route.params.type]){
-        console.log('no store :(',Date.now())
-      }else {
+      if (this.$store.state.recipesOrderedByType[this.$route.params.type]){
         clearInterval(waitForStore);
-        console.log('there is store',Date.now())
-        setTimeout(()=>{
-          this.loaded=true;
-          console.log('loading Page',Date.now())
-          },this.$store.state.recipesOrderedByType[this.$route.params.type].length*7);
+        console.log('store ready')
+        this.data=this.$store.state.recipesOrderedByType[this.$route.params.type];
       }
-    },5000)
+    },500);
   },
-  methods: {
+  watch: {
+    data() {
+      this.loaded = true;
+    },
+    currentPage() {
+      const that = this;
+      this.loaded = false;
+      setTimeout(() => {
+        that.loaded = true
+      }, 500);
+    },
   },
+
 };
 </script>
 
 <style scoped>
-.esconde{
-  display:none;
-}
-.mostra{
-  display:block;
-}
 </style>

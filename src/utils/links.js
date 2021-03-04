@@ -7,4 +7,5 @@ module.exports = {
     searchPath: `${mainPath}/search`,
     typePath: `${mainPath}/typeSearch/`,
     typePathWithParam: `${mainPath}/typeSearch/:type`,
+    detailsPath: `${mainPath}/details`,
 };

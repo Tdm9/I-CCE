@@ -5,7 +5,8 @@ import Popular from '@/components/pages/Popular';
 import Search from '@/components/pages/Search';
 import Vue from 'vue';
 import Meat from '@/components/pages/RecipeTypeViewer';
-import {homePath,favPath,popularPath,searchPath,typePathWithParam} from '@/utils/links';
+import Details from "@/components/pages/Details";
+import {homePath,favPath,popularPath,searchPath,typePathWithParam,detailsPath} from '@/utils/links';
 const router = new VueRouter({
     mode: 'history',
     hash: false,
@@ -16,6 +17,7 @@ const router = new VueRouter({
         { path: searchPath, component: Search },
         { path: typePathWithParam, component: Meat },
         { path: '*', redirect: homePath },
+        { path: detailsPath, name: 'details', component: Details, props: (route) => ({...route.params})},
     ]});
 Vue.use(VueRouter);
 

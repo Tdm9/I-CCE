@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <p>{{ text }}</p>
-  </div>
+  <b-container fluid>
+    <b-row>
+    <b-col v-for="(line,idx) in chunk(this.$store.state.recipes[1],this.$store.state.recipes[1].length/3)" cols="4" v-bind:key="idx + 'line'">
+      <b-row style="object-fit: scale-down" >
+        <OverlayImageCard class="h-25" v-for="item in line" v-bind:key="item._id" :recipe="item"/>
+      </b-row>
+    </b-col></b-row>
+  </b-container>
+
 </template>
 
 <script>
+import OverlayImageCard from "@/components/OverlayImageCard";
+import  {chunk} from 'lodash';
 export default {
   methods: {
+    chunk:chunk,
     // Convenience method to scroll a heading into view.
     // Not required for scrollspy to work
     scrollIntoView(event) {
@@ -18,6 +27,7 @@ export default {
       }
     }
   },
+  components: {OverlayImageCard},
   data() {
     return {
       text: `

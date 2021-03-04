@@ -14,7 +14,11 @@ const store = new Vuex.Store({
             state.recipes=recipes;
         },
         orderAndSet(state,recipes){
-            state.recipesOrderedByType=recipes//groupBy(recipes,'type');
+            let data={};
+            Object.keys(recipes).map(key=> {
+                data[key]=chunk(recipes[key],50);
+            });
+            state.recipesOrderedByType=data//groupBy(recipes,'type');
         },
     },
     actions: {
