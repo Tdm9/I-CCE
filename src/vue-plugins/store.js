@@ -6,10 +6,14 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        rawRecipes: [],
         recipes: [],
         recipesOrderedByType: {},
     },
     mutations: {
+        rawSet(state,recipes){
+            state.rawRecipes=recipes;
+        },
         set(state,recipes){
             state.recipes=recipes;
         },
@@ -25,6 +29,7 @@ const store = new Vuex.Store({
         fetchRecipes: ({ commit }) => fetch(`https://icce-server.herokuapp.com/api`)
             .then(response => response.json())
             .then(result => {
+                commit('rawSet', result);
                 commit('set', chunk(result,500));
                 return result
             })

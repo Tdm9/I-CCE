@@ -2,10 +2,10 @@
     <b-card v-once overlay :img-src="recipe.recipeImage===noPreviewImage?alternativeImage:recipe.recipeImage"
             text-variant="white" :title="recipe.name" :sub-title="recipe.cookTime" style=" display: inline-block">
 
-      <b-card-text>
+      <b-card-text >
         Dosage: {{recipe.dosage}} people
       </b-card-text>
-      <b-button id="show-btn" @click="showModal">Open Modal</b-button>
+      <b-button variant="outline-info" id="show-btn" @click="showModal">Info</b-button>
 
 
       <b-modal ref="my-modal" :title="recipe.name">
@@ -30,7 +30,14 @@
         <b-form-group label="Dosage:" label-cols-sm="3" label-align-sm="right" class="mb-0">
           <b-form-input disabled :value="recipe.dosage"/>
         </b-form-group>
-        <b-icon icon="exclamation-circle-fill" variant="success" v-on:click="goToDetails"></b-icon>
+
+
+        <template #modal-footer="{ ok}">
+          <b-button class="text-right align-content-end" variant="outline-success"  @click="goToDetails();ok()">More Details!
+             <b-icon icon="question-circle-fill"></b-icon>
+          </b-button>
+          <b-button variant="outline-secondary" @click="ok()">OK</b-button>
+        </template>
 
       </b-modal>
     </b-card>
@@ -69,5 +76,9 @@ export default {
 [v-cloak] {
   display: none;
 }
-
+.details {
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
 </style>

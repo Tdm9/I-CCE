@@ -1,5 +1,5 @@
 <template>
-  <a>favoritos</a>
+  <a>In development</a>
 </template>
 
 <script>

@@ -11,7 +11,7 @@
 
 <script>
 import OverlayImageCard from "@/components/OverlayImageCard";
-import {chunk} from 'lodash'
+import {chunk} from 'lodash';
 export default {
   name: "RecipeTypeViewer",
   data(){

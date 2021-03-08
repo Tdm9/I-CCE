@@ -1,64 +1,43 @@
 <template>
   <div>
-    <b-card  border-variant="primary" :header="recipe.name" header-bg-variant="primary" no-body>
+    <b-card class="text-white" border-variant="primary" :header="recipe.name" header-bg-variant="primary" no-body>
       <b-card-header header-tag="nav">
         <b-nav card-header tabs>
-          <b-nav-item>Active</b-nav-item>
-          <b-nav-item>Inactive</b-nav-item>
-          <b-nav-item>Disabled</b-nav-item>
+          <b-nav-item v-on:click="loaded = 'cookingData'">Cooking Data</b-nav-item>
+          <b-nav-item v-on:click="loaded = 'display'">Display Info</b-nav-item>
+          <b-nav-item v-show="recipe.comments.length>0" v-on:click="loaded = 'comments'">Comments</b-nav-item>
         </b-nav>
       </b-card-header>
 
-      <b-card-body>
-        <b-img :thumbnail="true" :center="true" :src="recipe.recipeImage==noPreviewImage?alternativeImage:recipe.recipeImage"/>
-        <b-col sm="3">
-          <b-list-group>
-            <b-list-group-item variant="info">Cooking Steps</b-list-group-item>
-
-            <b-list-group-item button v-for="item in recipe.cookingSteps" v-bind:key="item">{{ item }}</b-list-group-item>
-          </b-list-group>
-        </b-col>
-        <b-col sm="3">
+      <b-card-body class="text-black-50">
+        <b-row>
+          <b-col sm="4" v-show="loaded==='display'">
+            <b-img :thumbnail="true" :center="true" :src="recipe.recipeImage==noPreviewImage?alternativeImage:recipe.recipeImage"/>
+          </b-col>
+          <b-col sm="8" v-show="loaded==='display'">
+            <RecipeDisplayData :recipe="recipe"/>
+          </b-col>
+        </b-row>
+        <b-col sm="12" v-show="loaded==='comments'">
           <b-list-group>
             <b-list-group-item variant="info">Comments</b-list-group-item>
-            <b-list-group-item button v-for="item in recipe.comments" v-bind:key="item">{{ item }}</b-list-group-item>
+            <b-list-group-item button v-for="item in recipe.comments" v-bind:key="item">{{ item.comment }}</b-list-group-item>
           </b-list-group>
         </b-col>
         <b-row>
-        <b-col sm="3">
-          <b-list-group>
-            <b-list-group-item variant="info">Ingredients</b-list-group-item>
-            <b-list-group-item button v-for="item in recipe.ingredients" v-bind:key="item">{{ item }}</b-list-group-item>
-          </b-list-group>
-        </b-col>
-        <b-col sm="8">
-          <b-form inline>
-            <b-form-group>
-              <label for="creator" alignSelf="flex-start">User ID</label>
-              <b-form-input v-model="recipe.creatorName" disabled id="creator"/>
-            </b-form-group>
-            <b-form-group>
-              <label for="id">User ID</label>
-              <b-form-input v-model="recipe._id" disabled id="id"/>
-            </b-form-group>
-            <b-form-group>
-              <label for="difficulty">Difficulty</label>
-              <b-form-input v-model="recipe.difficulty" disabled id="difficulty"/>
-            </b-form-group>
-            <b-form-group>
-              <label for="type">Type</label>
-              <b-form-input v-model="recipe.type" disabled id="type"/>
-            </b-form-group>
-            <b-form-group>
-              <label for="cookTime">CookTime</label>
-              <b-form-input v-model="recipe.cookTime" disabled id="cookTime"/>
-            </b-form-group>
-            <b-form-group>
-              <label for="dosage">Dosage</label>
-              <b-form-input v-model="recipe.dosage" disabled id="dosage"/>
-            </b-form-group>
-          </b-form>
-        </b-col>
+          <b-col sm="3" v-show="loaded==='cookingData'">
+            <b-list-group>
+              <b-list-group-item variant="info">Ingredients</b-list-group-item>
+              <b-list-group-item button v-for="item in recipe.ingredients" v-bind:key="item">{{ item }}</b-list-group-item>
+            </b-list-group>
+          </b-col>
+          <b-col sm="9" v-show="loaded==='cookingData'">
+            <b-list-group>
+              <b-list-group-item variant="info">Cooking Steps</b-list-group-item>
+
+              <b-list-group-item button v-for="item in recipe.cookingSteps" v-bind:key="item">{{ item }}</b-list-group-item>
+            </b-list-group>
+          </b-col>
         </b-row>
       </b-card-body>
     </b-card>
@@ -66,10 +45,17 @@
 </template>
 
 <script>
+import RecipeDisplayData from "@/components/cardComponents/RecipeDisplayData";
 export default {
   name: "Details",
+  components : {RecipeDisplayData},
   props: {
     recipe:Object,
+  },
+  data(){
+    return{
+      loaded:'cookingData',
+    }
   },
 }
 </script>
